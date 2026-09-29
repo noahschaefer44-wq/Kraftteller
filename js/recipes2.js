@@ -56,6 +56,19 @@ Q('Einfaches Käse-Omelett',FR,8,[['ei',3],['gouda',40],['butter',10],['milch',3
 Q('Haferflocken-Pfannkuchen mit Banane',FR,15,[['hafer',60],['ei',2],['banane',1],['milch',50],['butter',10]],['Alle Zutaten außer Butter fein pürieren.','In Butter kleine Pfannkuchen 2 bis 3 Minuten pro Seite backen.']);
 Q('Zwei-Zutaten-Pancakes mit Banane',FR,12,[['ei',2],['banane',1],['hafer',40],['butter',10]],['Banane zerdrücken, mit Eiern und Haferflocken verrühren.','In Butter kleine Pancakes backen.']);
 
+/* --- Frühstück ohne Gluten und Milchprodukte --- */
+Q('Rührei mit Speck und Bratkartoffeln',[FR,HA],25,[['ei',3],['speck',40],['kart',200],['olivenoel',10],['zwiebel',30]],['Kartoffeln würfeln und in Öl 12 Minuten braten, Zwiebel und Speck zugeben.','Eier verquirlen, darübergießen und stocken lassen.']);
+Q('Süßkartoffel-Hash mit Spiegelei',[FR,HA],30,[['sue',250],['ei',2],['speck',30],['zwiebel',30],['olivenoel',10]],['Süßkartoffeln in kleine Würfel schneiden und in Öl 12 Minuten braten.','Zwiebel und Speck zugeben, weitere 5 Minuten braten.','Spiegeleier daraufsetzen.']);
+Q('Avocado-Ei-Schale mit Schinken',[FR,SN],10,[['avocado',1],['ei',3],['schinken',40],['zitrone',0.25],['olivenoel',10]],['Eier 8 Minuten kochen und würfeln.','Avocado würfeln und mit Zitronensaft, Öl und Schinken mischen, Eier unterheben.']);
+Q('Kokos-Chia-Pudding mit Beeren',[FR,DE],5,[['chia',40],['kokosm',250],['beeren',80],['honig',10]],['Chiasamen mit Kokosmilch und Honig verrühren.','Nach 10 Minuten nochmal umrühren und über Nacht im Kühlschrank quellen lassen.','Mit aufgetauten Beeren servieren.']);
+Q('Kokos-Chia-Pudding mit Banane und Mandeln',[FR,DE],5,[['chia',40],['kokosm',250],['banane',1],['mandel',20]],['Chiasamen mit Kokosmilch verrühren.','Nach 10 Minuten nochmal umrühren und über Nacht quellen lassen.','Bananenscheiben und gehackte Mandeln darübergeben.']);
+Q('Bananen-Ei-Pfannkuchen mit Erdnussbutter',FR,12,[['ei',3],['banane',1],['erdnussb',25],['olivenoel',10]],['Banane zerdrücken und mit den Eiern verquirlen.','In Öl kleine Pfannkuchen 2 Minuten pro Seite backen.','Mit Erdnussbutter bestreichen.']);
+Q('Kartoffel-Frittata mit Speck',[FR,HA],30,[['ei',4],['kart',200],['speck',40],['zwiebel',30],['olivenoel',10]],['Gekochte Kartoffeln, Speck und Zwiebel in Öl anbraten.','Verquirlte Eier darübergießen.','Bei 200 °C 10 Minuten im Ofen stocken lassen.']);
+Q('Hackpfanne mit Ei und Paprika',[FR,HA],20,[['hack',120],['ei',2],['paprika',80],['zwiebel',30],['olivenoel',10]],['Zwiebel und Paprika in Öl anbraten, Hack zugeben und krümelig braten.','Eier darüberschlagen und stocken lassen.']);
+Q('Lachs-Rührei mit Avocado',FR,12,[['ei',3],['lachs',80],['avocado',0.5],['olivenoel',10]],['Lachs würfeln und in Öl 3 Minuten braten.','Eier zugeben und rühren, bis sie stocken.','Mit Avocadostücken servieren.']);
+Q('Bananen-Kokos-Shake ohne Milch',[FR,SH],5,[['kokosm',250],['banane',2],['dattel',30],['mandelmus',25]],['Alles im Mixer 60 Sekunden pürieren.']);
+Q('Reisbrei mit Kokosmilch und Datteln',[FR,DE],25,[['reis',80],['kokosm',300],['dattel',30]],['Reis mit Kokosmilch und etwas Wasser 20 Minuten köcheln, bis er cremig ist.','Datteln klein schneiden und unterrühren.']);
+
 /* --- Snacks --- */
 const SNK=[
  ['Nussmix Klassik',3,[['mandel',25],['walnuss',25],['haselnuss',20],['rosinen',15]],['Alles in einer Schale mischen.']],

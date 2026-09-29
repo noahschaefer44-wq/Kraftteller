@@ -321,3 +321,17 @@ footer.site .wrap{display:grid;gap:6px}
 .cook .ingl span{font-size:13px;padding:4px 10px;border-radius:99px;background:var(--surface2)}
 
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+@media(max-width:430px){
+  .brand{font-size:1.12rem;gap:7px}
+  .top .wrap{gap:6px}
+  .top .btn{padding-inline:11px;font-size:13px}
+  .top .iconbtn{padding:0}
+}
+@media(max-width:360px){
+  .brand{font-size:1rem;gap:5px}
+  .brand i{display:none}
+  .top .wrap{gap:4px;padding-inline:10px}
+  .top .btn{padding-inline:8px;font-size:12.5px}
+  .top .iconbtn{width:34px}
+}

@@ -125,22 +125,26 @@ const slotTime=k=>S.plan.times[k]||SLOTS.find(s=>s.k===k).t;
 function dietOK(r){const d=S.plan.opts.diet;return!(d.includes('gf')&&!r.gf)&&!(d.includes('df')&&!r.df)&&!(d.includes('nf')&&!r.nf)}
 function genSlot(sl,used,day){
   const o=S.plan.opts,goal=dayGoal(),budK=goal*sl.w,budE=o.budget*sl.w;
-  let best=null,bs=1e9;
-  for(const r of RECIPES){
-    if(!r.slots.includes(sl.k)||!dietOK(r))continue;
-    if((sl.k==='mittag'||sl.k==='abend')&&r.time>o.maxTime)continue;
-    const p=Math.max(1,Math.min(3,Math.round(budK/r.kcal)));
-    const s=Math.abs(r.kcal*p-budK)/budK+Math.max(0,(r.price*p-budE)/Math.max(budE,1))*1.2+Math.random()*.5+(used.has(r.id)?.9:0)+(p>2?.15*(p-2):0)-(o.prep&&r.prep?.15:0)-(S.favs.has(r.id)?.15:0);
-    if(s<bs){bs=s;best={id:r.id,p}}
-  }
-  return best;
+  const pick=useTime=>{
+    let best=null,bs=1e9;
+    for(const r of RECIPES){
+      if(!r.slots.includes(sl.k)||!dietOK(r))continue;
+      if(useTime&&(sl.k==='mittag'||sl.k==='abend')&&r.time>o.maxTime)continue;
+      const p=Math.max(1,Math.min(3,Math.round(budK/r.kcal)));
+      const s=Math.abs(r.kcal*p-budK)/budK+Math.max(0,(r.price*p-budE)/Math.max(budE,1))*1.2+Math.random()*.5+(used.has(r.id)?.9:0)+(p>2?.15*(p-2):0)-(o.prep&&r.prep?.15:0)-(S.favs.has(r.id)?.15:0);
+      if(s<bs){bs=s;best={id:r.id,p}}
+    }
+    return best;
+  };
+  /* Passt nichts in die Kochzeit, gilt die Zeitgrenze nicht. Die Ernährungsfilter gelten immer. */
+  return pick(true)||pick(false);
 }
 function fillDay(day,force=false){
   const d=S.plan.days[day]=S.plan.days[day]||{};
   const used=new Set();Object.values(S.plan.days).forEach(x=>Object.values(x).forEach(m=>m&&used.add(m.id)));
   for(const sl of activeSlots()){
     const cur=d[sl.k];if(cur&&(cur.lock||(!force&&BYID[cur.id])))continue;
-    const g=genSlot(sl,used,day);if(g){d[sl.k]={...g,lock:false,eaten:false};used.add(g.id)}
+    const g=genSlot(sl,used,day);if(g){d[sl.k]={...g,lock:false,eaten:false};used.add(g.id)}else delete d[sl.k];
   }
   Object.keys(d).forEach(k=>{if(!activeSlots().some(s=>s.k===k)&&!d[k].lock)delete d[k]});
 }

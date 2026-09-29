@@ -57,7 +57,7 @@ cashew|Cashewkerne|g|N|1.50|570|18|44|30
 haselnuss|Haselnüsse|g|N|1.10|640|15|61|10
 kuerbisk|Kürbiskerne|g|N|1.00|560|30|46|5
 lein|Leinsamen|g|N|0.40|500|18|40|2
-chia|Chiasamen|g|N|1.20|490|17|31|8
+chia|Chiasamen|g|N|1.20|486|17|31|42
 sonnenb|Sonnenblumenkerne|g|N|0.50|580|21|50|12
 dattel|Datteln|g|N|0.80|280|2|0.5|65
 honig|Honig|g|N|0.90|300|0.3|0|80
