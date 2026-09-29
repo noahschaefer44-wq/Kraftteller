@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Kraftteller</title>
+<meta name="description" content="Über 650 Rezepte zum Zunehmen ohne Soja: mit Tagesplan, Einkaufskorb, Kalorientagebuch und Kochmodus.">
+<meta name="theme-color" content="#ECEFE6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101612" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23f1f3ea' stroke='%232f5238' stroke-width='4'/%3E%3Ccircle cx='32' cy='32' r='13' fill='%23e9a90c'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="css/app.css">
+<script>try{var t=localStorage.getItem('kt.theme');if(t)document.documentElement.dataset.theme=JSON.parse(t)}catch(e){}</script>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#rezepte"><i></i>Kraftteller</a>
+    <nav class="tabs" aria-label="Bereiche">
+      <a href="#rezepte" data-tab="rezepte">Rezepte</a>
+      <a href="#plan" data-tab="plan">Plan</a>
+      <a href="#vorrat" data-tab="vorrat">Vorrat</a>
+      <a href="#tagebuch" data-tab="tagebuch">Tagebuch</a>
+    </nav>
+    <button class="btn iconbtn" id="btnTheme" type="button" aria-label="Hell oder dunkel umschalten">◐</button>
+    <button class="btn" id="btnAccount" type="button" hidden>Anmelden</button>
+    <button class="btn primary" id="btnCart" type="button" aria-label="Einkaufskorb öffnen">Korb <span class="n" id="cartN">0</span></button>
+  </div>
+</header>
+
+<main>
+<!-- REZEPTE -->
+<section class="view" id="v-rezepte">
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">Zunehmen mit echtem Essen</div>
+        <h1>Iss dich <em>stark.</em></h1>
+        <p class="lede">Fleisch, Fisch, Eier, Milchprodukte, Kartoffeln, Nüsse. Alles ohne Soja und ohne Fertigprodukte.</p>
+        <div class="stats">
+          <div><b id="sN">0</b><span class="eyebrow">Rezepte</span></div>
+          <div><b>0 ×</b><span class="eyebrow">Soja</span></div>
+          <div><b id="sQuick">0</b><span class="eyebrow">In 10 Min. fertig</span></div>
+        </div>
+      </div>
+      <div class="today" id="todayCard"></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="now" id="nowStrip" aria-label="Passt jetzt"></section>
+  </div>
+
+  <div class="wrap layout" id="liste">
+    <div class="veil-sheet" id="filterVeil"></div>
+    <aside class="filters" id="filters" aria-label="Filter">
+      <div class="sheet-head"><b>Filter</b><button class="btn iconbtn" id="btnFilterClose" type="button" aria-label="Schließen">✕</button></div>
+      <div class="search"><input id="fQ" type="search" placeholder="Suche: Lachs, Kartoffel, Ei …" aria-label="Rezepte suchen"></div>
+      <div><h3>Tageszeit</h3><div class="chips" id="fSlot"></div></div>
+      <div><h3>Gericht</h3><div class="chips" id="fCats"></div></div>
+      <div><h3>Enthält</h3><div class="chips" id="fProt"></div></div>
+      <div><h3>Zubereitung</h3><div class="chips" id="fQuick"></div></div>
+      <div class="range"><div class="row"><label for="fTime">Zubereitung bis</label><output id="oTime"></output></div><input id="fTime" type="range" min="5" max="150" step="5" value="150"></div>
+      <div class="range"><div class="row"><label for="fPrice">Preis pro Portion bis</label><output id="oPrice"></output></div><input id="fPrice" type="range" min="1.5" max="12" step="0.5" value="12"></div>
+      <div class="range"><div class="row"><label for="fKcal">Mindestens Kalorien</label><output id="oKcal"></output></div><input id="fKcal" type="range" min="0" max="1400" step="50" value="0"></div>
+      <div class="range"><div class="row"><label for="fPro">Mindestens Eiweiß</label><output id="oPro"></output></div><input id="fPro" type="range" min="0" max="90" step="5" value="0"></div>
+      <div><h3>Ernährung und mehr</h3><div class="chips" id="fDiet"></div></div>
+      <div class="sheet-foot"><button class="btn ghost" id="btnReset" type="button">Zurücksetzen</button><button class="btn primary" id="btnFilterApply" type="button">Rezepte zeigen</button></div>
+    </aside>
+
+    <section style="min-width:0">
+      <div class="toolbar">
+        <div class="count" id="count"></div>
+        <button class="btn only-s" id="btnFilters" type="button">Filter <span class="n" id="filterN" hidden>0</span></button>
+        <button class="btn hide-s" id="btnRandom" type="button">Überrasch mich</button>
+        <button class="btn" id="btnAddRecipe" type="button" hidden>+ Eigenes Rezept</button>
+        <select id="fSort" aria-label="Sortierung">
+          <option value="rel">Gemischt</option><option value="kcal">Meiste Kalorien</option><option value="pro">Meiste Eiweiß</option>
+          <option value="kpe">Kalorien pro Euro</option><option value="price">Günstigste</option><option value="time">Schnellste</option><option value="name">A bis Z</option>
+        </select>
+      </div>
+      <div class="grid" id="grid"></div>
+      <div class="more"><button class="btn" id="btnMore" type="button" hidden>Mehr Rezepte laden</button></div>
+    </section>
+  </div>
+</section>
+
+<!-- PLAN -->
+<section class="view" id="v-plan" hidden><div class="wrap page" id="planRoot"></div></section>
+<!-- VORRAT -->
+<section class="view" id="v-vorrat" hidden><div class="wrap page" id="pantryRoot"></div></section>
+<!-- TAGEBUCH -->
+<section class="view" id="v-tagebuch" hidden><div class="wrap page" id="diaryRoot"></div></section>
+</main>
+
+<footer class="site"><div class="wrap">
+  <div>Alle Rezepte kommen ohne Sojaprodukte aus. Preise sind Schätzwerte für Discounter, Nährwerte werden aus den Zutaten berechnet.</div>
+  <div>Prüfe bei Brot, Wurst und Konserven trotzdem das Etikett. Manche Hersteller mischen Soja unter. Das hier ersetzt keine ärztliche Beratung.</div>
+</div></footer>
+
+<nav class="tabbar" aria-label="Bereiche">
+  <a href="#rezepte" data-tab="rezepte"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3.5"/></svg>Rezepte</a>
+  <a href="#plan" data-tab="plan"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Plan</a>
+  <a href="#vorrat" data-tab="vorrat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9h14l-1.2 10.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8zM9 9V7a3 3 0 0 1 6 0v2"/></svg>Vorrat</a>
+  <a href="#tagebuch" data-tab="tagebuch"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5M4 19h16M8 15l3-4 3 2 5-7"/></svg>Tagebuch</a>
+</nav>
+
+<div class="veil" id="veil"></div>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle"><div class="sheet" id="sheet"></div></div>
+<aside class="drawer" id="drawer" aria-label="Einkaufskorb">
+  <header><h2>Einkaufskorb</h2><button class="btn iconbtn" id="btnCloseCart" type="button" aria-label="Schließen">✕</button></header>
+  <div class="body" id="cartBody"></div>
+  <footer id="cartFoot"></footer>
+</aside>
+<div class="cook" id="cook" role="dialog" aria-modal="true" aria-label="Kochmodus" hidden></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/data.js"></script>
+<script src="js/recipes2.js"></script>
+<script src="js/util.js"></script>
+<script src="js/backend.js"></script>
+<script src="js/app.js"></script>
+<script src="js/features.js"></script>
+</body>
+</html>
